@@ -98,7 +98,7 @@ client.on('qr', async () => {
         console.log('        --- PAIRING CODE ---        ');
         console.log(`        ${pairingCode}        `);
         console.log('=======================================');
-        console.log('View this code on your local dashboard at http://localhost:3000');
+        console.log(`View this code on your local dashboard at http://localhost:${PORT}`);
     } catch (error) {
         console.error('Failed to get pairing code:', error);
         botStatus = 'ERROR';
