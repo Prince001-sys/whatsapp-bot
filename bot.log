@@ -1,0 +1,83 @@
+2026-05-10T13:03:36.979Z 
+[DEBUG] Received message from 210501313245311@lid: "hi"
+2026-05-10T13:03:36.983Z [DEBUG] Matched question "hi", sending reply...
+2026-05-10T13:03:37.041Z 
+[DEBUG] Received message from 139608046235857@lid: "Hello! I am an automated bot. How can I help you today?"
+2026-05-10T13:03:37.042Z [DEBUG] Message "hello! i am an automated bot. how can i help you today?" did not match any predefined questions.
+2026-05-10T13:03:37.136Z [DEBUG] Reply sent successfully!
+2026-05-10T13:03:47.584Z 
+[DEBUG] Received message from 210501313245311@lid: "I want to book consultation"
+2026-05-10T13:03:47.586Z [DEBUG] Message "i want to book consultation" did not match any predefined questions.
+2026-05-10T13:04:29.716Z 
+[DEBUG] Received message from 210501313245311@lid: "Hello"
+2026-05-10T13:04:29.716Z [DEBUG] Matched question "hello", sending reply...
+2026-05-10T13:04:29.726Z 
+[DEBUG] Received message from 139608046235857@lid: "Hi there! Welcome to our service."
+2026-05-10T13:04:29.726Z [DEBUG] Message "hi there! welcome to our service." did not match any predefined questions.
+2026-05-10T13:04:29.760Z [DEBUG] Reply sent successfully!
+2026-05-10T13:04:38.427Z 
+[DEBUG] Received message from 210501313245311@lid: "Help"
+2026-05-10T13:04:38.427Z [DEBUG] Matched question "help", sending reply...
+2026-05-10T13:04:38.436Z 
+[DEBUG] Received message from 139608046235857@lid: "You can ask me "pricing", "contact", or "services"."
+2026-05-10T13:04:38.437Z [DEBUG] Message "you can ask me "pricing", "contact", or "services"." did not match any predefined questions.
+2026-05-10T13:04:38.482Z [DEBUG] Reply sent successfully!
+2026-05-10T13:04:47.143Z 
+[DEBUG] Received message from 210501313245311@lid: "Contact"
+2026-05-10T13:04:47.144Z [DEBUG] Matched question "contact", sending reply...
+2026-05-10T13:04:47.155Z 
+[DEBUG] Received message from 139608046235857@lid: "You can reach out to us at admin@example.com."
+2026-05-10T13:04:47.155Z [DEBUG] Message "you can reach out to us at admin@example.com." did not match any predefined questions.
+2026-05-10T13:04:47.191Z [DEBUG] Reply sent successfully!
+2026-05-10T13:04:52.793Z 
+[DEBUG] Received message from 210501313245311@lid: "Services"
+2026-05-10T13:04:52.794Z [DEBUG] Matched question "services", sending reply...
+2026-05-10T13:04:52.810Z 
+[DEBUG] Received message from 139608046235857@lid: "We offer web development, chatbots, and automation services."
+2026-05-10T13:04:52.811Z [DEBUG] Message "we offer web development, chatbots, and automation services." did not match any predefined questions.
+2026-05-10T13:04:52.845Z [DEBUG] Reply sent successfully!
+2026-05-10T13:05:00.354Z 
+[DEBUG] Received message from 210501313245311@lid: "Chatbots"
+2026-05-10T13:05:00.355Z [DEBUG] Message "chatbots" did not match any predefined questions.
+2026-05-10T13:06:22.933Z 
+[DEBUG] Received message from 919369552324@c.us: "Hlo"
+2026-05-10T13:06:22.934Z [DEBUG] Message "hlo" did not match any predefined questions.
+2026-05-10T13:06:28.150Z 
+[DEBUG] Received message from 21264852848667@lid: "For further assistance, click the link below:https://api.whatsapp.com/send/?phone=918655700724
+OR
+email at info@bonkerscorner.com,
+OR
+call us at 08634018888 / 08634018989"
+2026-05-10T13:06:28.150Z [DEBUG] Message "for further assistance, click the link below:https://api.whatsapp.com/send/?phone=918655700724
+or
+email at info@bonkerscorner.com,
+or
+call us at 08634018888 / 08634018989" did not match any predefined questions.
+2026-05-10T13:06:36.655Z 
+[DEBUG] Received message from 111042772377637@lid: ""
+2026-05-10T13:06:36.655Z [DEBUG] Message "" did not match any predefined questions.
+2026-05-10T13:06:36.664Z 
+[DEBUG] Received message from 919369552324@c.us: "Hi"
+2026-05-10T13:06:36.664Z [DEBUG] Matched question "hi", sending reply...
+2026-05-10T13:06:36.673Z 
+[DEBUG] Received message from 139608046235857@lid: "Hello! I am an automated bot. How can I help you today?"
+2026-05-10T13:06:36.673Z [DEBUG] Message "hello! i am an automated bot. how can i help you today?" did not match any predefined questions.
+2026-05-10T13:06:36.694Z [DEBUG] Reply sent successfully!
+2026-05-10T13:06:36.980Z 
+[DEBUG] Received message from 111042772377637@lid: ""
+2026-05-10T13:06:36.980Z [DEBUG] Message "" did not match any predefined questions.
+2026-05-10T13:06:36.983Z 
+[DEBUG] Received message from 111042772377637@lid: ""
+2026-05-10T13:06:36.983Z [DEBUG] Message "" did not match any predefined questions.
+2026-05-10T13:06:39.775Z 
+[DEBUG] Received message from 111042772377637@lid: ""
+2026-05-10T13:06:39.776Z [DEBUG] Message "" did not match any predefined questions.
+2026-05-10T13:06:40.873Z 
+[DEBUG] Received message from 111042772377637@lid: ""
+2026-05-10T13:06:40.874Z [DEBUG] Message "" did not match any predefined questions.
+2026-05-10T13:09:39.087Z 
+[DEBUG] Received message from 919369552324@c.us: "Order Enquiries"
+2026-05-10T13:09:39.087Z [DEBUG] Message "order enquiries" did not match any predefined questions.
+2026-05-10T13:09:42.079Z 
+[DEBUG] Received message from 111042772377637@lid: ""
+2026-05-10T13:09:42.079Z [DEBUG] Message "" did not match any predefined questions.

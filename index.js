@@ -100,7 +100,9 @@ client.on('qr', async () => {
         console.log('=======================================');
         console.log('View this code on your local dashboard at http://localhost:3000');
     } catch (error) {
-        console.error('Failed to get pairing code:', error.message);
+        console.error('Failed to get pairing code:', error);
+        botStatus = 'ERROR';
+        currentPairingCode = 'Failed: ' + (error.message || error);
     }
 });
 
@@ -233,4 +235,3 @@ app.listen(PORT, '0.0.0.0', () => {
         currentPairingCode = 'Error: ' + err.message;
     });
 });
-
