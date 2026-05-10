@@ -222,8 +222,12 @@ client.on('message_create', async msg => {
 });
 
 // Start Server
-app.listen(PORT, () => {
-    console.log(`\n🚀 Visual Flow Builder running at http://localhost:${PORT}`);
-    client.initialize();
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`\n🚀 Visual Flow Builder running at http://0.0.0.0:${PORT}`);
+    client.initialize().catch(err => {
+        console.error('\n❌ FATAL: Failed to initialize WhatsApp client:', err);
+        botStatus = 'ERROR';
+        currentPairingCode = 'Error: ' + err.message;
+    });
 });
 
