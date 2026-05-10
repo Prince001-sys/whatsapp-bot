@@ -1,0 +1,75 @@
+{
+  "drawflow": {
+    "Home": {
+      "data": {
+        "4": {
+          "id": 4,
+          "name": "trigger",
+          "data": {
+            "keyword": "hi"
+          },
+          "class": "trigger",
+          "html": "\n    <div class=\"relative w-full overflow-hidden rounded-xl border border-emerald-400/40 bg-white p-3 shadow-md transition-all hover:shadow-lg group\">\n      <div class=\"absolute inset-0 bg-gradient-to-br from-black/[0.02] via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none\"></div>\n      <div class=\"relative space-y-2\">\n        <div class=\"flex items-center gap-2\">\n          <div class=\"flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-emerald-400/40 bg-zinc-50 shadow-sm\">\n            <svg class=\"h-4 w-4 text-emerald-400\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polygon points=\"13 2 3 14 12 14 11 22 21 10 12 10 13 2\"></polygon></svg>\n          </div>\n          <div class=\"min-w-0 flex-1\">\n            <span class=\"mb-0.5 rounded-full border border-black/10 bg-zinc-100 px-1.5 py-0 text-[9px] uppercase tracking-[0.15em] text-zinc-600 inline-flex items-center justify-center font-semibold transition-colors\">\n              TRIGGER\n            </span>\n            <h3 class=\"truncate text-xs font-bold tracking-tight text-zinc-900\">Keyword Listener</h3>\n          </div>\n        </div>\n        <p class=\"line-clamp-2 text-[10px] leading-relaxed text-zinc-600\">\n          Triggers when user sends keyword\n        </p>\n        \n                <div class=\"mt-2 space-y-1\">\n                    <p class=\"text-[10px] text-zinc-800 font-medium\">Keyword</p>\n                    <input type=\"text\" df-keyword placeholder=\"e.g. hi, support\" class=\"w-full bg-white border border-zinc-300 rounded text-xs px-2 py-1.5 text-zinc-900 focus:border-emerald-400 focus:outline-none transition-colors shadow-sm\">\n                </div>\n            \n      </div>\n    </div>\n    ",
+          "typenode": false,
+          "inputs": {},
+          "outputs": {
+            "output_1": {
+              "connections": [
+                {
+                  "node": "5",
+                  "output": "input_1"
+                }
+              ]
+            }
+          },
+          "pos_x": 15,
+          "pos_y": 87
+        },
+        "5": {
+          "id": 5,
+          "name": "menu",
+          "data": {
+            "text": "Hey there! Welcome to Trendieez! 👋 I’m here to help you out with whatever you need. Whether it's a question, an order update, or something else, just let me know, and I’ll get right on it! ",
+            "opt1": "order enquiries",
+            "opt2": "refunds and wallet issue",
+            "opt3": "returns and exchanges",
+            "opt4": "explore offers",
+            "opt5": "share feedback"
+          },
+          "class": "menu",
+          "html": "\n    <div class=\"relative w-full overflow-hidden rounded-xl border border-amber-400/40 bg-white p-3 shadow-md transition-all hover:shadow-lg group\">\n      <div class=\"absolute inset-0 bg-gradient-to-br from-black/[0.02] via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none\"></div>\n      <div class=\"relative space-y-2\">\n        <div class=\"flex items-center gap-2\">\n          <div class=\"flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-amber-400/40 bg-zinc-50 shadow-sm\">\n            <svg class=\"h-4 w-4 text-amber-400\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"4\" x2=\"20\" y1=\"12\" y2=\"12\"/><line x1=\"4\" x2=\"20\" y1=\"6\" y2=\"6\"/><line x1=\"4\" x2=\"20\" y1=\"18\" y2=\"18\"/></svg>\n          </div>\n          <div class=\"min-w-0 flex-1\">\n            <span class=\"mb-0.5 rounded-full border border-black/10 bg-zinc-100 px-1.5 py-0 text-[9px] uppercase tracking-[0.15em] text-zinc-600 inline-flex items-center justify-center font-semibold transition-colors\">\n              INTERACTIVE\n            </span>\n            <h3 class=\"truncate text-xs font-bold tracking-tight text-zinc-900\">Options Menu</h3>\n          </div>\n        </div>\n        <p class=\"line-clamp-2 text-[10px] leading-relaxed text-zinc-600\">\n          Displays a numbered menu\n        </p>\n        \n                <div class=\"mt-2 space-y-1\">\n                    <p class=\"text-[10px] text-zinc-800 font-medium\">Menu Text</p>\n                    <textarea df-text rows=\"2\" placeholder=\"Please select an option:\" class=\"w-full bg-white border border-zinc-300 rounded text-xs px-2 py-1.5 text-zinc-900 focus:border-amber-400 focus:outline-none transition-colors shadow-sm\"></textarea>\n                    \n                    <div class=\"grid grid-cols-2 gap-1.5 mt-2\">\n                        <div>\n                            <p class=\"text-[9px] text-zinc-600 mb-0.5\">Opt 1</p>\n                            <input type=\"text\" df-opt1 value=\"1\" class=\"w-full bg-white border border-zinc-300 rounded text-[10px] px-1.5 py-1 text-zinc-900 focus:border-amber-400 focus:outline-none transition-colors\">\n                        </div>\n                        <div>\n                            <p class=\"text-[9px] text-zinc-600 mb-0.5\">Opt 2</p>\n                            <input type=\"text\" df-opt2 value=\"2\" class=\"w-full bg-white border border-zinc-300 rounded text-[10px] px-1.5 py-1 text-zinc-900 focus:border-amber-400 focus:outline-none transition-colors\">\n                        </div>\n                        <div>\n                            <p class=\"text-[9px] text-zinc-600 mb-0.5\">Opt 3</p>\n                            <input type=\"text\" df-opt3 value=\"3\" class=\"w-full bg-white border border-zinc-300 rounded text-[10px] px-1.5 py-1 text-zinc-900 focus:border-amber-400 focus:outline-none transition-colors\">\n                        </div>\n                        <div>\n                            <p class=\"text-[9px] text-zinc-600 mb-0.5\">Opt 4</p>\n                            <input type=\"text\" df-opt4 value=\"4\" class=\"w-full bg-white border border-zinc-300 rounded text-[10px] px-1.5 py-1 text-zinc-900 focus:border-amber-400 focus:outline-none transition-colors\">\n                        </div>\n                        <div class=\"col-span-2\">\n                            <p class=\"text-[9px] text-zinc-600 mb-0.5\">Opt 5</p>\n                            <input type=\"text\" df-opt5 value=\"5\" class=\"w-full bg-white border border-zinc-300 rounded text-[10px] px-1.5 py-1 text-zinc-900 focus:border-amber-400 focus:outline-none transition-colors\">\n                        </div>\n                    </div>\n                </div>\n            \n      </div>\n    </div>\n    ",
+          "typenode": false,
+          "inputs": {
+            "input_1": {
+              "connections": [
+                {
+                  "node": "4",
+                  "input": "output_1"
+                }
+              ]
+            }
+          },
+          "outputs": {
+            "output_1": {
+              "connections": []
+            },
+            "output_2": {
+              "connections": []
+            },
+            "output_3": {
+              "connections": []
+            },
+            "output_4": {
+              "connections": []
+            },
+            "output_5": {
+              "connections": []
+            }
+          },
+          "pos_x": 418,
+          "pos_y": 62
+        }
+      }
+    }
+  }
+}
