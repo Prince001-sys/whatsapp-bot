@@ -26,6 +26,9 @@ function loadFlows() {
             flowGraph = JSON.parse(data);
         } else {
             flowGraph = { "drawflow": { "Home": { "data": {} } } };
+            if (!fs.existsSync(DATA_DIR)) {
+                fs.mkdirSync(DATA_DIR, { recursive: true });
+            }
             fs.writeFileSync(flowFile, JSON.stringify(flowGraph));
         }
     } catch (err) {
