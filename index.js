@@ -85,7 +85,7 @@ client.on('qr', async () => {
     isPrompting = true;
     
     console.log('\n--- Authentication Required ---');
-    const phoneNumber = '919369552324'; // Using predefined phone number
+    const phoneNumber = '919555504715'; // Using predefined phone number
     
     // Wait for the WhatsApp Web page to fully initialize its alternative linking state
     setTimeout(async () => {
