@@ -87,23 +87,26 @@ client.on('qr', async () => {
     console.log('\n--- Authentication Required ---');
     const phoneNumber = '919369552324'; // Using predefined phone number
     
-    try {
-        console.log('Requesting pairing code for:', phoneNumber);
-        const pairingCode = await client.requestPairingCode(phoneNumber);
-        
-        botStatus = 'PAIRING';
-        currentPairingCode = pairingCode;
-        
-        console.log('\n=======================================');
-        console.log('        --- PAIRING CODE ---        ');
-        console.log(`        ${pairingCode}        `);
-        console.log('=======================================');
-        console.log(`View this code on your local dashboard at http://localhost:${PORT}`);
-    } catch (error) {
-        console.error('Failed to get pairing code:', error);
-        botStatus = 'ERROR';
-        currentPairingCode = 'Failed: ' + (error.message || error);
-    }
+    // Wait for the WhatsApp Web page to fully initialize its alternative linking state
+    setTimeout(async () => {
+        try {
+            console.log('Requesting pairing code for:', phoneNumber);
+            const pairingCode = await client.requestPairingCode(phoneNumber);
+            
+            botStatus = 'PAIRING';
+            currentPairingCode = pairingCode;
+            
+            console.log('\n=======================================');
+            console.log('        --- PAIRING CODE ---        ');
+            console.log(`        ${pairingCode}        `);
+            console.log('=======================================');
+            console.log(`View this code on your local dashboard at http://localhost:${PORT}`);
+        } catch (error) {
+            console.error('Failed to get pairing code:', error);
+            botStatus = 'ERROR';
+            currentPairingCode = 'Failed: ' + (error.message || error);
+        }
+    }, 5000);
 });
 
 client.on('ready', () => {
