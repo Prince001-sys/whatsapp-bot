@@ -8,7 +8,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
     
     <!-- Drawflow CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.css">
@@ -34,10 +34,103 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
+    
+    <!-- External Libraries -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 </head>
 <body>
+    <!-- Auth Overlay (Premium Multi-step) -->
+    <div id="auth-overlay" class="auth-overlay">
+        <!-- Animated Background -->
+        <div class="auth-bg">
+            <div class="mesh-gradient"></div>
+            <div class="noise"></div>
+        </div>
+
+        <!-- Main Modal -->
+        <div class="auth-container">
+            
+            <!-- Step 1: Welcome/Intro -->
+            <div id="step-intro" class="auth-step active">
+                <div class="auth-header">
+                    <div class="auth-logo">
+                        <i data-lucide="gem" class="logo-icon-premium"></i>
+                    </div>
+                    <h1 class="auth-title-large">Treckwear Bot</h1>
+                    <p class="auth-description">Enterprise-grade WhatsApp automation at your fingertips.</p>
+                </div>
+                <div class="auth-actions">
+                    <button id="btn-get-started" class="btn-premium">
+                        Get Started <i data-lucide="arrow-right"></i>
+                    </button>
+                </div>
+                <div class="auth-footer-minimal">
+                    Trusted by 10,000+ developers worldwide.
+                </div>
+            </div>
+
+            <!-- Step 2: Auth (Login/Signup) -->
+            <div id="step-auth" class="auth-step">
+                <div class="auth-back">
+                    <button id="btn-back-to-intro" class="btn-icon-minimal"><i data-lucide="arrow-left"></i></button>
+                </div>
+                
+                <div class="auth-tabs">
+                    <button id="tab-login" class="auth-tab-btn active">Sign In</button>
+                    <button id="tab-signup" class="auth-tab-btn">Sign Up</button>
+                </div>
+
+                <!-- Login Form -->
+                <div id="form-login" class="auth-form active">
+                    <div class="input-group-premium">
+                        <label><i data-lucide="mail"></i> Email Address</label>
+                        <input type="email" id="login-email" placeholder="admin@treckwear.bot" value="email-test123@gmail.com">
+                    </div>
+                    <div class="input-group-premium">
+                        <label><i data-lucide="lock"></i> Access Key</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="login-password" placeholder="••••••••" value="zxcv123@">
+                            <button class="btn-toggle-password"><i data-lucide="eye"></i></button>
+                        </div>
+                    </div>
+                    <button id="btn-login-submit" class="btn-premium">Unlock Dashboard</button>
+                </div>
+
+                <!-- Signup Form (Placeholder for UI) -->
+                <div id="form-signup" class="auth-form">
+                    <div class="input-group-premium">
+                        <label><i data-lucide="mail"></i> Email Address</label>
+                        <input type="email" placeholder="you@example.com">
+                    </div>
+                    <div class="input-group-premium">
+                        <label><i data-lucide="lock"></i> Choose Password</label>
+                        <input type="password" placeholder="••••••••">
+                    </div>
+                    <button class="btn-premium" onclick="alert('Signup is currently restricted to invited users.')">Create Account</button>
+                </div>
+
+                <div class="auth-help">
+                    <p>Forgot access key? <a href="#">Contact Support</a></p>
+                </div>
+            </div>
+
+            <!-- Step 3: Success -->
+            <div id="step-success" class="auth-step">
+                <div class="success-icon-wrapper">
+                    <div class="success-ring"></div>
+                    <i data-lucide="party-popper" class="success-icon"></i>
+                </div>
+                <h2 class="auth-title">Access Granted</h2>
+                <p class="auth-description">System decrypted. Redirecting to your secure workspace...</p>
+                <button id="btn-enter-dashboard" class="btn-premium success-btn">Enter Workspace</button>
+            </div>
+
+        </div>
+    </div>
+
     <!-- Landing Page (PrismaHero) -->
-    <div id="landing-page" class="h-screen w-full relative overflow-hidden bg-black text-white">
+    <div id="landing-page" class="h-screen w-full relative overflow-hidden bg-black text-white" style="display: none;">
         
         <!-- Background video -->
         <video
@@ -58,11 +151,11 @@
         <!-- Navbar -->
         <nav class="absolute left-1/2 top-0 z-20 -translate-x-1/2">
           <div class="flex items-center gap-3 rounded-b-2xl bg-black px-4 py-2 sm:gap-6 md:gap-12 md:rounded-b-3xl md:px-8 lg:gap-14">
-              <a href="#" class="nav-item-hero text-[10px] transition-colors sm:text-xs md:text-sm">Our story</a>
-              <a href="#" class="nav-item-hero text-[10px] transition-colors sm:text-xs md:text-sm">Collective</a>
-              <a href="#" class="nav-item-hero text-[10px] transition-colors sm:text-xs md:text-sm">Workshops</a>
-              <a href="#" class="nav-item-hero text-[10px] transition-colors sm:text-xs md:text-sm">Programs</a>
-              <a href="#" class="nav-item-hero text-[10px] transition-colors sm:text-xs md:text-sm">Inquiries</a>
+              <a href="#" class="nav-item-hero text-[10px] transition-colors sm:text-xs md:text-sm">Home</a>
+              <a href="#" class="nav-item-hero text-[10px] transition-colors sm:text-xs md:text-sm">Features</a>
+              <a href="#" class="nav-item-hero text-[10px] transition-colors sm:text-xs md:text-sm">Pricing</a>
+              <a href="#" class="nav-item-hero text-[10px] transition-colors sm:text-xs md:text-sm">About</a>
+              <a href="#" class="nav-item-hero text-[10px] transition-colors sm:text-xs md:text-sm">Contact</a>
           </div>
         </nav>
 
@@ -73,7 +166,7 @@
             <div class="col-span-12 lg:col-span-8">
               <h1 class="font-medium leading-[0.85] tracking-[-0.07em] text-[26vw] sm:text-[24vw] md:text-[22vw] lg:text-[20vw] xl:text-[19vw] 2xl:text-[20vw] m-0" style="color: #E1E0CC">
                 <div class="words-pull-up-container inline-flex flex-wrap" id="prisma-title">
-                  <span>Flow Builder</span>
+                  <span>Treckwear Bot</span>
                 </div>
               </h1>
             </div>
@@ -105,7 +198,7 @@
             <div class="nav-left">
                 <a href="#" class="logo-link">
                     <span class="logo-icon">✨</span>
-                    <span class="logo-text">Trendieez</span>
+                    <span class="logo-text">treckwear</span>
                 </a>
                 <div class="nav-divider"></div>
                 <div class="nav-tabs">
@@ -119,6 +212,9 @@
                     <div class="status-dot"></div>
                     <span class="status-text">Checking...</span>
                 </div>
+                <button class="btn-secondary" id="btn-logout" style="margin-right: 10px;">
+                    Logout
+                </button>
                 <button class="btn-primary" id="btn-save">
                     Save Flow
                 </button>
@@ -167,20 +263,70 @@
                 </div>
             </div>
 
-            <!-- Status View -->
             <div id="status-view" class="view-section" style="display: none;">
-                <div class="status-hero">
-                    <div class="hero-icon" id="hero-status-icon">🔄</div>
-                    <h2 id="hero-status-title">Checking connection...</h2>
-                    <p id="hero-status-desc">Connecting to the WhatsApp client.</p>
-                </div>
-                
-                <div id="pairing-section" class="pairing-section hidden">
-                    <div class="pairing-card">
-                        <h3>Link your Device</h3>
-                        <p>Open WhatsApp on your phone, go to <strong>Linked Devices -> Link a Device -> Link with phone number instead</strong>.</p>
-                        <div class="pairing-code-display">
-                            <span id="pairing-code">------</span>
+                <div class="status-content">
+                    <div class="status-hero">
+                        <div class="hero-icon" id="hero-status-icon">🔄</div>
+                        <h2 id="hero-status-title">Checking connection...</h2>
+                        <p id="hero-status-desc">Connecting to the WhatsApp client.</p>
+                    </div>
+
+                    <!-- Setup Card -->
+                    <div class="setup-section">
+                        <div class="setup-card glass">
+                            <div class="setup-header">
+                                <span class="setup-icon">📱</span>
+                                <h3>Link a New Device</h3>
+                            </div>
+                            <p class="setup-desc">Enter your phone number (including country code) to generate a pairing code.</p>
+                            <div class="setup-input-group">
+                                <input type="text" id="input-phone" placeholder="e.g. 919369552324" class="phone-input">
+                                <button id="btn-pair-phone" class="btn-action">Link Device</button>
+                            </div>
+                            <p class="setup-note">No "+" or spaces (e.g., 91 for India).</p>
+                        </div>
+                    </div>
+                    
+                    <div id="pairing-section" class="pairing-section hidden">
+                        <div class="pairing-card glass">
+                            <div class="pairing-header">
+                                <i data-lucide="link-2"></i>
+                                <h3>Complete Connection</h3>
+                            </div>
+                            <p>Follow the steps on your phone to link the device.</p>
+                            
+                            <div class="pairing-methods">
+                                <!-- QR Option -->
+                                <div id="qr-container" class="qr-container hidden">
+                                    <div id="qrcode">
+                                        <div class="qr-placeholder">
+                                            <div class="loading-spinner"></div>
+                                        </div>
+                                    </div>
+                                    <p class="qr-hint">Scan with WhatsApp</p>
+                                </div>
+                                
+                                <!-- Code Option -->
+                                <div class="pairing-code-wrapper hidden">
+                                    <div class="pairing-code-display">
+                                        <span id="pairing-code">------</span>
+                                    </div>
+                                    <p class="code-hint">Enter this code on your phone</p>
+                                    <div class="code-steps">
+                                        <ol>
+                                            <li>Open WhatsApp on your phone</li>
+                                            <li>Tap Menu or Settings > Linked Devices</li>
+                                            <li>Tap "Link a Device" > "Link with phone number instead"</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pairing-footer">
+                                <button class="btn-refresh" id="btn-refresh-code">
+                                    <i data-lucide="refresh-cw"></i> Get New Code
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -194,8 +340,9 @@
     <!-- Toast Notification -->
     <div id="toast" class="toast hidden">Saved successfully!</div>
 
-    <!-- Drawflow JS -->
+    <!-- Libraries -->
     <script src="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     
     <!-- App Logic -->
     <script src="app.js"></script>

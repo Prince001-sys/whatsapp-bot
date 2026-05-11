@@ -1,4 +1,5 @@
 let editor;
+let qrCodeInstance = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     // Nav Elements
@@ -6,25 +7,177 @@ document.addEventListener('DOMContentLoaded', () => {
     const navStatus = document.getElementById('nav-status');
     const flowView = document.getElementById('flow-view');
     const statusView = document.getElementById('status-view');
+    const landingPage = document.getElementById('landing-page');
+    const dashboardPage = document.getElementById('dashboard-page');
     
-    // Status Elements
-    const headerStatusBadge = document.getElementById('header-status-badge');
-    const statusText = headerStatusBadge.querySelector('.status-text');
-    const heroStatusIcon = document.getElementById('hero-status-icon');
-    const heroStatusTitle = document.getElementById('hero-status-title');
-    const heroStatusDesc = document.getElementById('hero-status-desc');
-    const pairingSection = document.getElementById('pairing-section');
-    const pairingCodeDisplay = document.getElementById('pairing-code');
+    // --- Authentication Logic ---
+    const authOverlay = document.getElementById('auth-overlay');
+    const stepIntro = document.getElementById('step-intro');
+    const stepAuth = document.getElementById('step-auth');
+    const stepSuccess = document.getElementById('step-success');
+    
+    const btnGetStarted = document.getElementById('btn-get-started');
+    const btnBackToIntro = document.getElementById('btn-back-to-intro');
+    const btnLoginSubmit = document.getElementById('btn-login-submit');
+    const btnEnterDashboard = document.getElementById('btn-enter-dashboard');
+    const btnLogout = document.getElementById('btn-logout');
+    
+    const tabLogin = document.getElementById('tab-login');
+    const tabSignup = document.getElementById('tab-signup');
+    const formLogin = document.getElementById('form-login');
+    const formSignup = document.getElementById('form-signup');
+    
+    const togglePasswordBtn = document.querySelector('.btn-toggle-password');
+    const passwordInput = document.getElementById('login-password');
+
+
+    // Initialize Lucide Icons
+    if (window.lucide) {
+        lucide.createIcons();
+    }
+    
+    function showStep(stepId) {
+        [stepIntro, stepAuth, stepSuccess].forEach(step => {
+            step.classList.remove('active');
+        });
+        document.getElementById(stepId).classList.add('active');
+    }
+
+    function checkAuth() {
+        const token = localStorage.getItem('bot_token');
+        if (token) {
+            authOverlay.style.display = 'none';
+            // Show landing page (website) first after login
+            if (dashboardPage.style.display !== 'block') {
+                landingPage.style.display = 'block';
+            }
+        } else {
+            authOverlay.style.display = 'flex';
+            showStep('step-intro');
+            landingPage.style.display = 'none';
+            dashboardPage.style.display = 'none';
+        }
+    }
+
+    // --- Auth Transitions ---
+    if (btnGetStarted) {
+        btnGetStarted.addEventListener('click', () => showStep('step-auth'));
+    }
+
+    if (btnBackToIntro) {
+        btnBackToIntro.addEventListener('click', () => showStep('step-intro'));
+    }
+
+    if (tabLogin) {
+        tabLogin.addEventListener('click', () => {
+            tabLogin.classList.add('active');
+            tabSignup.classList.remove('active');
+            formLogin.classList.add('active');
+            formSignup.classList.remove('active');
+        });
+    }
+
+    if (tabSignup) {
+        tabSignup.addEventListener('click', () => {
+            tabSignup.classList.add('active');
+            tabLogin.classList.remove('active');
+            formSignup.classList.add('active');
+            formLogin.classList.remove('active');
+        });
+    }
+
+    if (togglePasswordBtn && passwordInput) {
+        togglePasswordBtn.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            const icon = togglePasswordBtn.querySelector('i');
+            if (icon) {
+                icon.setAttribute('data-lucide', type === 'password' ? 'eye' : 'eye-off');
+                lucide.createIcons();
+            }
+        });
+    }
+
+    if (btnLoginSubmit) {
+        btnLoginSubmit.addEventListener('click', async () => {
+            const email = document.getElementById('login-email').value;
+            const password = passwordInput.value;
+            
+            if (!email || !password) {
+                showToast("Please enter both email and access key.");
+                return;
+            }
+
+            const originalText = btnLoginSubmit.innerHTML;
+            btnLoginSubmit.innerHTML = '<span class="loading-spinner"></span> Unlocking...';
+            btnLoginSubmit.disabled = true;
+
+            try {
+                const res = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                const data = await res.json();
+                
+                if (res.ok && data.success) {
+                    localStorage.setItem('bot_token', data.token);
+                    
+                    // Show Success Step
+                    showStep('step-success');
+                    
+                    // Trigger Confetti
+                    if (window.confetti) {
+                        confetti({
+                            particleCount: 150,
+                            spread: 70,
+                            origin: { y: 0.6 },
+                            colors: ['#ffffff', '#888888', '#000000']
+                        });
+                    }
+                } else {
+                    showToast(data.error || "Access denied. Invalid credentials.");
+                }
+            } catch (e) {
+                showToast("Network error. Please try again.");
+            } finally {
+                btnLoginSubmit.innerHTML = originalText;
+                btnLoginSubmit.disabled = false;
+            }
+        });
+    }
+
+    if (btnEnterDashboard) {
+        btnEnterDashboard.addEventListener('click', () => {
+            authOverlay.style.display = 'none';
+            landingPage.style.display = 'block';
+        });
+    }
+
+    if (btnLogout) {
+        btnLogout.addEventListener('click', () => {
+            localStorage.removeItem('bot_token');
+            window.location.href = '/'; // Using href instead of reload to be more explicit
+        });
+    }
+
+    // Initial check
+    checkAuth();
 
     // Landing Page transition
     const btnJoinLab = document.getElementById('btn-join-lab');
-    const landingPage = document.getElementById('landing-page');
-    const dashboardPage = document.getElementById('dashboard-page');
-
     if (btnJoinLab) {
         btnJoinLab.addEventListener('click', () => {
-            landingPage.style.display = 'none';
-            dashboardPage.style.display = 'block';
+            const token = localStorage.getItem('bot_token');
+            if (token) {
+                landingPage.style.display = 'none';
+                dashboardPage.style.display = 'block';
+                // Trigger resize for Drawflow
+                setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
+            } else {
+                authOverlay.style.display = 'flex';
+                showStep('step-auth'); // Go directly to login if they try to join lab
+            }
         });
     }
 
@@ -36,6 +189,8 @@ document.addEventListener('DOMContentLoaded', () => {
         flowView.classList.add('active');
         flowView.style.display = 'flex';
         statusView.style.display = 'none';
+        // Trigger resize for Drawflow
+        setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
     });
 
     navStatus.addEventListener('click', (e) => {
@@ -55,8 +210,6 @@ document.addEventListener('DOMContentLoaded', () => {
     editor.reroute_curvature = 0.5;
     editor.start();
 
-    // Register node types (Drawflow requirement if using components, but we use raw HTML)
-    
     // Load existing flow from backend
     loadFlow();
 
@@ -83,6 +236,83 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Failed to save flow.");
         }
     });
+
+    // Pairing button logic
+    const btnPairPhone = document.getElementById('btn-pair-phone');
+    if (btnPairPhone) {
+        btnPairPhone.addEventListener('click', async () => {
+            const input = document.getElementById('input-phone');
+            const phone = input.value.trim();
+            
+            if (!phone) {
+                showToast("Please enter a phone number.");
+                return;
+            }
+
+            // Simple regex for phone validation: digits only, 10-15 chars
+            const phoneRegex = /^[0-9]{10,15}$/;
+            if (!phoneRegex.test(phone)) {
+                showToast("Invalid format. Use 10-15 digits (e.g. 919876543210)");
+                return;
+            }
+
+            const originalText = btnPairPhone.innerHTML;
+            btnPairPhone.innerHTML = '<span class="loading-spinner"></span> Linking...';
+            btnPairPhone.disabled = true;
+
+            try {
+                const res = await fetch('/api/pair', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phoneNumber: phone })
+                });
+                
+                if (res.ok) {
+                    showToast("Pairing initiated! Check code below.");
+                    input.value = '';
+                    // Force immediate poll
+                    pollStatus();
+                } else {
+                    const data = await res.json();
+                    showToast(data.error || "Failed to initiate pairing.");
+                }
+            } catch (e) {
+                showToast("Network error. Please try again.");
+            } finally {
+                btnPairPhone.innerHTML = originalText;
+                btnPairPhone.disabled = false;
+            }
+        });
+    }
+
+    const btnRefreshCode = document.getElementById('btn-refresh-code');
+    if (btnRefreshCode) {
+        btnRefreshCode.addEventListener('click', async () => {
+            const originalText = btnRefreshCode.innerHTML;
+            btnRefreshCode.innerHTML = '<i data-lucide="refresh-cw" class="spin"></i> Refreshing...';
+            if (window.lucide) lucide.createIcons();
+            btnRefreshCode.disabled = true;
+            
+            try {
+                const res = await fetch('/api/refresh-pairing', { method: 'POST' });
+                if (res.ok) {
+                    showToast("Requesting new pairing code...");
+                    pollStatus();
+                } else {
+                    const data = await res.json();
+                    showToast(data.error || "Failed to refresh code.");
+                }
+            } catch (e) {
+                showToast("Network error.");
+            } finally {
+                setTimeout(() => {
+                    btnRefreshCode.innerHTML = originalText;
+                    if (window.lucide) lucide.createIcons();
+                    btnRefreshCode.disabled = false;
+                }, 5000);
+            }
+        });
+    }
 
     // Polling Status
     pollStatus();
@@ -266,6 +496,7 @@ async function pollStatus() {
 
     try {
         const res = await fetch('/api/status');
+        if (!res.ok) throw new Error('API Error');
         const data = await res.json();
         
         headerStatusBadge.className = 'status-badge';
@@ -275,17 +506,73 @@ async function pollStatus() {
             statusText.innerText = 'Connected';
             heroStatusIcon.innerText = '✅';
             heroStatusTitle.innerText = 'Bot is Active and Ready';
-            heroStatusDesc.innerText = 'Listening for incoming WhatsApp messages.';
+            heroStatusDesc.innerText = `Connected to ${data.targetPhone || 'WhatsApp'}. Listening for messages.`;
             pairingSection.classList.add('hidden');
-        } else if (data.status === 'PAIRING') {
-            headerStatusBadge.classList.add('disconnected');
-            statusText.innerText = 'Pairing Required';
+            document.querySelector('.setup-section').classList.add('hidden');
+        } else if (data.status === 'WAITING_FOR_INPUT' || data.status === 'PAIRING' || data.qr || data.status === 'INITIALIZING') {
+            const isLinking = data.status === 'PAIRING' || data.status === 'INITIALIZING' || data.qr || data.pairingCode;
+            
+            if (isLinking) {
+                headerStatusBadge.classList.add('linking');
+                statusText.innerText = 'Linking...';
+            } else {
+                headerStatusBadge.classList.add('disconnected');
+                statusText.innerText = 'Awaiting Input';
+            }
+            
             heroStatusIcon.innerText = '📱';
             heroStatusTitle.innerText = 'Device Linking Required';
-            heroStatusDesc.innerText = 'Your bot needs to be connected to a WhatsApp account.';
+            heroStatusDesc.innerText = 'Follow the instructions below to link your WhatsApp account.';
+            
+            document.querySelector('.setup-section').classList.remove('hidden');
             pairingSection.classList.remove('hidden');
-            pairingCodeDisplay.innerText = data.pairingCode || 'Loading...';
+            
+            // Handle QR
+            const qrWrapper = document.getElementById('qr-container');
+            if (data.qr) {
+                qrWrapper.classList.remove('hidden');
+                if (typeof QRCode !== 'undefined') {
+                    if (!qrCodeInstance) {
+                        const qrElem = document.getElementById("qrcode");
+                        if (qrElem) {
+                            qrElem.innerHTML = '';
+                            qrCodeInstance = new QRCode(qrElem, {
+                                text: data.qr,
+                                width: 200,
+                                height: 200,
+                                colorDark : "#000000",
+                                colorLight : "#ffffff",
+                                correctLevel : QRCode.CorrectLevel.H
+                            });
+                        }
+                    } else {
+                        qrCodeInstance.clear();
+                        qrCodeInstance.makeCode(data.qr);
+                    }
+                }
+            } else {
+                qrWrapper.classList.add('hidden');
+            }
+
+            // Handle Pairing Code
+            const codeWrapper = document.querySelector('.pairing-code-wrapper');
+            if (codeWrapper) {
+                // Show code wrapper if we have a code OR if we are explicitly in PAIRING mode
+                if (data.pairingCode || data.status === 'PAIRING') {
+                    codeWrapper.classList.remove('hidden');
+                    if (data.pairingCode) {
+                        pairingCodeDisplay.innerText = data.pairingCode;
+                        pairingCodeDisplay.classList.remove('loading-text');
+                    } else {
+                        pairingCodeDisplay.innerText = 'GENERATING...';
+                        pairingCodeDisplay.classList.add('loading-text');
+                    }
+                } else {
+                    codeWrapper.classList.add('hidden');
+                }
+            }
         } else {
+            headerStatusBadge.classList.add('disconnected');
             statusText.innerText = 'Initializing...';
             heroStatusIcon.innerText = '🔄';
             heroStatusTitle.innerText = 'Starting up...';
@@ -293,7 +580,9 @@ async function pollStatus() {
             pairingSection.classList.add('hidden');
         }
     } catch (error) {
-        headerStatusBadge.className = 'status-badge disconnected';
-        statusText.innerText = 'Server Offline';
+        console.error("Poll error:", error);
+        if (headerStatusBadge && !headerStatusBadge.classList.contains('connected')) {
+            statusText.innerText = 'Connecting...';
+        }
     }
 }
